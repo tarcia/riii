@@ -14,14 +14,14 @@ library(C50)
 data(churn)
 str(churnTrain)
 
-variable.list = !names(churnTrain) %in% c('state','area_code','account_length')
+variable.list = !names(churnTrain) %in% c('state','area_code','account_length') //churnTrain 裡'state','area_code','account_length'這三個變數不要
 churnTrain=churnTrain[,variable.list]
 
-ind<-sample(1:2, nrow(churnTrain), replace=T, prob=c(0.7, 0.3))
-trainset=churnTrain[ind==1,]
+ind<-sample(1:2, nrow(churnTrain), replace=T, prob=c(0.7, 0.3)) //nrow(churnTrain)= n of observations
+trainset=churnTrain[ind==1,] //將all sample以三七分的比例分為1和2，1 as training set, 2 as test set
 testset=churnTrain[ind==2,]
 
-library('rpart')
+library('rpart') //準備建模
 churn.rp<-rpart(churn ~., data=trainset)
 churn.rp
 summary(churn.rp)
